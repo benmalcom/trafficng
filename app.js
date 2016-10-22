@@ -1,18 +1,32 @@
+//Import configure.js for settings
+var configure = require('./configure');
+
+//call configure.defaults() to set global variables
+configure.defaults();
+//call configure.mongoose() to configure mongoose
+configure.mongoose();
+
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require('http');
+var engine = require('ejs-mate');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./main/routes/main');
+var apiRoutes = require('./api/routes/index');
+
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// use ejs-locals for all ejs templates:
+app.engine('ejs', engine);
+
+app.set('views',__dirname + '/main/views');
+app.set('view engine', 'ejs'); // so you can render('index')
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -23,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', apiRoutes(app));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -57,4 +71,9 @@ app.use(function(err, req, res, next) {
 });
 
 
+
+var server = http.createServer(app);
+server.listen(app.get('port'), function () {
+  console.log('app listening on port ',app.get('port'));
+});
 module.exports = app;

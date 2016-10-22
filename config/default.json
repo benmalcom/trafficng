@@ -1,0 +1,40 @@
+{
+    "app":
+    {
+        "name": "Traffic-ng",
+        "port": 3000,
+        "baseUrl": "localhost:3000"
+    },
+    "api":
+    {
+        "prefix": "/api",
+        "versions": [1]
+    },
+    "authToken":{
+        "superSecret":"gn-ciffarT",
+        "expiresIn" : 86400
+    },
+    "db": {
+        "mongodb" : {
+            "url": "mongodb://localhost/trafficng"
+        }
+    },
+    "googleMapsOptions": {
+        "provider": "google",
+        "httpAdapter": "https",
+        "apiKey": "AIzaSyDQmO7eDIifg9LKlqFUwiLWNfv8dR7x8Qo",
+        "formatter": null
+    },
+    "itemsPerPage": {
+        "default": 10
+    },
+    "aws": {
+        "credentials": {
+            "accessKeyId": "AKIAJDCCOFR3ZUWOI7OA",
+            "secretAccessKey": "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",
+            "region": "us-west-2"
+        },
+
+        "visystemBucket": "visystem"
+    }
+}

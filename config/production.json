@@ -1,0 +1,11 @@
+{
+  "app":
+  {
+    "baseUrl": "trafficng.herokuapp.com"
+  },
+  "db": {
+    "mongodb" : {
+      "url": "mongodb://benmalcom:Benny_95@ds063536.mlab.com:63536/trafficng"
+    }
+  }
+}
