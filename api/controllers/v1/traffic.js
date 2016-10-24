@@ -45,8 +45,10 @@ module.exports = {
                         throw error;
                     }
                     console.log("state ",state);
+                    obj.location = {landmark:obj.landmark};
+                    obj.location['state'] = state.name;
+                    delete obj.landmark;
                     var traffic = new Traffic(obj);
-                    traffic.location['state'] = state.name;
                     return traffic.save();
                 })
                 .then(function (savedTraffic) {
@@ -91,8 +93,11 @@ module.exports = {
             error = {};
         if(query.landmark)
         {
-            queryCriteria.name = new RegExp('^'+query.landmark+'$', "i");
+            queryCriteria['$or'] = [];
+            var regEx = new RegExp(query.landmark, "i");
+            queryCriteria['$or'].push({'location.landmark':regEx },{'location.street_name':regEx});
             qsSuffix = "?landmark="+query.landmark;
+            console.log("criteria ",queryCriteria);
         }
         if(query.state)
         {

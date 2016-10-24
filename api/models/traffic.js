@@ -10,6 +10,7 @@ var TrafficSchema = new Schema({
     level: {type: Schema.Types.ObjectId, ref: 'TrafficLevel'},
     state: {type: Schema.Types.ObjectId, ref: 'State'},
     location: {
+        street_name: String,
         landmark: String,
         state: String,
         coordinates: [Number]
@@ -31,7 +32,10 @@ TrafficSchema.pre('save', function(next){
             console.log("res ",res);
             if(Array.isArray(res) && res[0])
             {
-                data.location['coordinates'] = [res[0].longitude,res[0].latitude];
+                var point = res[0];
+                data.location['coordinates'] = [point.longitude,point.latitude];
+                if(point.streetName) data.location['street_name'] = point.streetName;
+                console.log("Data ",data);
             }
             next();
         })
