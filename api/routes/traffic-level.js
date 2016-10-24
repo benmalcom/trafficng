@@ -3,10 +3,8 @@
  */
 var config = require('config');
 var router = require('express').Router();
-var multer = require('multer');
 var apiVersion = 'v'+process.env.API_VERSION;
 var TrafficLevelController = require('../controllers/'+apiVersion+ '/traffic-level');
-var checkToken = require('../../api/middlewares/auth_token');
 
 
 router.route('/traffic-levels')
@@ -19,5 +17,4 @@ router.route('/traffic-levels/:traffic_level_id')
     .get(TrafficLevelController.findOne)
     .put(TrafficLevelController.update)
     .delete(TrafficLevelController.delete);
-
 module.exports = router;

@@ -8,6 +8,7 @@ var formatResponse = require('../shared/format-response');
 module.exports = function (app) {
     app.use(prefix,require('./traffic-level'));
     app.use(prefix,require('./traffic'));
+    app.use(prefix,require('./state'));
 
 
     app.use(config.get('api.prefix')+"/*",function (req,res) {

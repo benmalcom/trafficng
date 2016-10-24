@@ -6,11 +6,12 @@ var mongoSanitize = require('mongo-sanitize');
 var htmlSanitize = require('sanitize-html');
 
 module.exports = function(req, res, next) {
+    "use strict";
     if(req.body && !_.isEmpty(req.body))
     {
         console.info("Sanitizing req.body!");
         var body = req.body;
-        for(var prop in body)
+        for(let prop in body)
         {
             if(body.hasOwnProperty(prop))
             {
@@ -24,7 +25,7 @@ module.exports = function(req, res, next) {
     {
         console.info("Sanitizing req.query!");
         var query = req.query;
-        for(var prop in query)
+        for(let prop in query)
         {
             if(query.hasOwnProperty(prop))
             {
@@ -38,7 +39,7 @@ module.exports = function(req, res, next) {
     {
         console.info("Sanitizing req.params!");
         var params = req.params;
-        for(var prop in params)
+        for(let prop in params)
         {
             if(params.hasOwnProperty(prop))
             {

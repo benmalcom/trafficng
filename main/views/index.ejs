@@ -1,11 +1,152 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<% layout('layout/default') %>
+<!-- Page-Title -->
+<!--<div class="row">
+  <div class="col-sm-12">
+    <div class="page-title-box">
+      <div class="btn-group pull-right">
+        <ol class="breadcrumb hide-phone p-0 m-0">
+          <li>
+            <h4 class="page-title">Traffic Updates</h4>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!-- end page title end breadcrumb -->
+
+
+
+<div class="row">
+  <div class="col-sm-4 p-0 sidebar">
+      <div class="panel panel-default shadow">
+        <div class="panel-heading">
+          <h3 class="panel-title"><strong>Going out?</strong></h3>
+          <p class="panel-sub-title font-13 text-muted">Check traffic along your route</p>
+        </div>
+        <div class="panel-body">
+          <form role="form">
+            <div class="form-group">
+              <label for="exampleInputEmail1">From Where?</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Destination</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-teal btn-custom">Submit</button>
+          </form>
+        </div>
+      </div>
+
+    <div class="panel panel-color panel-inverse shadow">
+      <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+        <p class="panel-sub-title font-13 text-muted">Know the traffic situation around a place.</p>
+
+      </div>
+      <div class="panel-body">
+        <div class="form-group search-box">
+          <input type="text" id="search-input" class="form-control product-search" placeholder="Bridge,bus-stop,popular traffic spots">
+          <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-8">
+
+    <div class="timeline timeline-left">
+      <article class="timeline-item alt">
+        <div class="text-left">
+          <div class="time-show first">
+            <a href="#" class="btn btn-danger w-lg">Today</a>
+            <span class="col-sm-offset-7"><strong>Traffic updates</strong></span>
+          </div>
+        </div>
+      </article>
+      <article class="timeline-item">
+        <div class="timeline-desk">
+          <div class="panel">
+            <div class="timeline-box">
+              <span class="arrow"></span>
+              <span class="timeline-icon"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
+              <h4 class="">1 hour ago</h4>
+              <p class="timeline-date text-muted"><small>08:25 am</small></p>
+              <p>Dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? </p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="timeline-item ">
+        <div class="timeline-desk">
+          <div class="panel">
+            <div class="timeline-box">
+              <span class="arrow"></span>
+              <span class="timeline-icon bg-success"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
+              <h4 class="text-success">2 hours ago</h4>
+              <p class="timeline-date text-muted"><small>08:25 am</small></p>
+              <p>consectetur adipisicing elit. Iusto, optio, dolorum <a href="#">John deon</a> provident rerum aut hic quasi placeat iure tempora laudantium </p>
+
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="timeline-item">
+        <div class="timeline-desk">
+          <div class="panel">
+            <div class="timeline-box">
+              <span class="arrow"></span>
+              <span class="timeline-icon bg-primary"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
+              <h4 class="text-primary">10 hours ago</h4>
+              <p class="timeline-date text-muted"><small>08:25 am</small></p>
+              <p>3 new photo Uploaded on facebook fan page</p>
+              <div class="album">
+                <a href="#">
+                  <img alt="" src="assets/images/small/img-1.jpg">
+                </a>
+                <a href="#">
+                  <img alt="" src="assets/images/small/img-2.jpg">
+                </a>
+                <a href="#">
+                  <img alt="" src="assets/images/small/img-3.jpg">
+                </a>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="timeline-item">
+        <div class="timeline-desk">
+          <div class="panel">
+            <div class="timeline-box">
+              <span class="arrow"></span>
+              <span class="timeline-icon bg-purple"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
+              <h4 class="text-purple">14 hours ago</h4>
+              <p class="timeline-date text-muted"><small>08:25 am</small></p>
+              <p>Outdoor visit at California State Route 85 with John Boltana &
+                Harry Piterson regarding to setup a new show room.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="timeline-item">
+        <div class="timeline-desk">
+          <div class="panel">
+            <div class="timeline-box">
+              <span class="arrow"></span>
+              <span class="timeline-icon"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
+              <h4 class="text-muted">19 hours ago</h4>
+              <p class="timeline-date text-muted"><small>08:25 am</small></p>
+              <p>Jonatha Smith added new milestone <span><a href="#">Pathek</a></span>
+                Lorem ipsum dolor sit amet consiquest dio</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</div>

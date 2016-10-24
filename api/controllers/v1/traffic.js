@@ -3,6 +3,8 @@
  */
 
 var Traffic = require('../../models/traffic');
+var State = require('../../models/state');
+
 var formatResponse = require('../../shared/format-response');
 var Validator = require('validatorjs');
 var _ = require('underscore');
@@ -27,28 +29,34 @@ module.exports = {
         var meta = {statusCode:200, success:false},
             error = {};
         var obj = req.body;
-        var rules = {level:'required',location:'required'};
+        var rules = {level:'required',state:'required',landmark:'required'};
         var validator = new Validator(obj,rules,{
                                                  'required.level':"Traffic level is not specified",
-                                                 'required.location':"Location is required"
+                                                 'required.state':"Your state is required is required"
                                                 });
         if(validator.passes())
         {
-            var traffic = new Traffic(obj);
-            traffic.save(function (err,savedTraffic) {
-                if(err)
-                {
-                    error =  helper.transformToError({code:503,message:"Sorry the traffic information could not be saved at this time, try again!"}).toCustom();
-                    return next(error);
-                }
-                else
-                {
-                    meta.success = true;
-                    meta.message = "You added new traffic information!";
-                    res.status(meta.statusCode).json(formatResponse.do(meta,savedTraffic));
-                }
-            });
-
+            var state_id = obj.state;
+            State.findById(state_id).exec()
+                .then(function (state) {
+                    if(!state)
+                    {
+                        error =  helper.transformToError({code:404,message:"State not found!"}).toCustom();
+                        throw error;
+                    }
+                    obj.location['state'] = state.name;
+                    var traffic = new Traffic(obj);
+                    return traffic.save();
+                })
+                .then(function (err) {
+                        error =  helper.transformToError({code:503,message:"Sorry the traffic information could not be saved at this time, try again!",extra:err}).toCustom();
+                        return next(error);
+                    },
+                   function (savedTraffic) {
+                        meta.success = true;
+                        meta.message = "You added new traffic information!";
+                        res.status(meta.statusCode).json(formatResponse.do(meta,savedTraffic));
+                });
         }
         else
         {
@@ -77,11 +85,23 @@ module.exports = {
     find: function (req, res, next) {
         var query = req.query,
             meta = {statusCode:200, success:false},
+            qsSuffix = "",
+            queryCriteria = {},
             error = {};
+        if(query.landmark)
+        {
+            queryCriteria.name = new RegExp('^'+query.landmark+'$', "i");
+            qsSuffix = "?landmark="+query.landmark;
+        }
+        if(query.state)
+        {
+            queryCriteria.state = query.state;
+            qsSuffix = "?state="+query.state;
+        }
 
         var perPage = query.perPage ? parseInt(query.perPage,"10") : config.get('itemsPerPage.default');
         var page = query.page ? parseInt(query.page,"10") : 1;
-        var baseRequestUrl = config.get('app.baseUrl')+config.get('api.prefix')+"/traffics";
+        var baseRequestUrl = config.get('app.baseUrl')+config.get('api.prefix')+"/traffics"+qsSuffix;
 
         if(page > 1)
         {
@@ -91,7 +111,7 @@ module.exports = {
         }
 
         meta.pagination = {perPage:perPage,page:page,currentPage:baseRequestUrl+"?page="+page};
-        Traffic.count(function(err , count){
+        Traffic.count(queryCriteria, function(err , count){
             if(!err)
             {
                 meta.pagination.totalCount = count;
@@ -105,7 +125,7 @@ module.exports = {
 
         });
 
-        Traffic.find()
+        Traffic.find(queryCriteria)
             .skip(perPage * (page-1))
             .limit(perPage)
             .sort('-createdAt')
@@ -166,60 +186,5 @@ module.exports = {
             error =  helper.transformToError({code:404,message:"Traffic information not found"}).toCustom();
             return next(error);
         }
-    },
-
-    getTrafficByLandmark: function (req, res, next) {
-        var query = req.query,
-            meta = {statusCode:200, success:false},
-            error = {},
-            queryCriteria = {},
-            qsSuffix = "";
-            if(query.landmark)
-            {
-                queryCriteria = {name: new RegExp('^'+query.landmark+'$', "i")};
-                qsSuffix = "?landmark="+query.landmark;
-            }
-        var perPage = query.perPage ? parseInt(query.perPage,"10") : config.get('itemsPerPage.default');
-        var page = query.page ? parseInt(query.page,"10") : 1;
-        var baseRequestUrl = config.get('app.baseUrl')+config.get('api.prefix')+"/traffics"+qsSuffix;
-
-        if(page > 1)
-        {
-            var prev = page - 1;
-            meta.pagination.prev = prev;
-            meta.pagination.nextPage = baseRequestUrl+"?page="+prev;
-        }
-
-        meta.pagination = {perPage:perPage,page:page,currentPage:baseRequestUrl+"?page="+page};
-        Traffic.count(queryCriteria,function(err , count){
-            if(!err)
-            {
-                meta.pagination.totalCount = count;
-                if(count > (perPage * page))
-                {
-                    var next = ++page;
-                    meta.pagination.next = next;
-                    meta.pagination.nextPage = baseRequestUrl+"?page="+next;
-                }
-            }
-
-        });
-
-        Traffic.find(queryCriteria)
-            .skip(perPage * (page-1))
-            .limit(perPage)
-            .sort('-createdAt')
-            .exec(function (err, traffics) {
-                if (err)
-                {
-                    error =  helper.transformToError({code:503,message:"Error in server interaction"}).toCustom();
-                    return next(error);
-                }
-                else {
-                    meta.success = true;
-                    res.status(meta.statusCode).json(formatResponse.do(meta,traffics));
-                }
-            });
-
     }
 };

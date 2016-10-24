@@ -7,8 +7,8 @@ var NodeGeocoder = require('node-geocoder');
 var config = require('config');
 
 var TrafficSchema = new Schema({
-
     level: {type: Schema.Types.ObjectId, ref: 'TrafficLevel'},
+    state: {type: Schema.Types.ObjectId, ref: 'State'},
     location: {
         landmark: String,
         state: String,
@@ -31,7 +31,7 @@ TrafficSchema.pre('save', function(next){
             console.log("res ",res);
             if(Array.isArray(res) && res[0])
             {
-                data.location.coordinates = [res[0].longitude,res[0].latitude];
+                data.location['coordinates'] = [res[0].longitude,res[0].latitude];
             }
             next();
         })

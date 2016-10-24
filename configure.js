@@ -22,6 +22,6 @@ exports.mongoose = function () {
         console.log("Could not connect to mongodb!");
         console.log(err);
     });
-    console.log("mongo url ",config.get('db.url'));
-    mongoose.connect(config.get('db.url'));
+    console.log("mongo url ",config.get('db.mongodb.url'));
+    mongoose.connect(config.get('db.mongodb.url'));
 };

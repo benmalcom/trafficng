@@ -11,11 +11,16 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
+    "ejs-mate": "^2.3.0",
     "express": "~4.13.4",
+    "mongo-sanitize": "^1.0.0",
     "mongoose": "^4.6.2",
     "morgan": "~1.7.0",
     "node-geocoder": "^3.15.0",
+    "q": "^1.4.1",
+    "sanitize-html": "^1.13.0",
     "serve-favicon": "~2.3.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "validatorjs": "^3.8.0"
   }
 }

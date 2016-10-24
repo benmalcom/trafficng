@@ -15,9 +15,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
 var engine = require('ejs-mate');
+var config = require('config');
+
+var sanitizeInputs = require('./api/middlewares/sanitize');
+var setApiVersion = require('./api/middlewares/check_api_version');
 
 var routes = require('./main/routes/main');
 var apiRoutes = require('./api/routes/index');
+
 
 
 var app = express();
@@ -27,6 +32,8 @@ app.engine('ejs', engine);
 
 app.set('views',__dirname + '/main/views');
 app.set('view engine', 'ejs'); // so you can render('index')
+app.set('port', process.env.PORT || config.get('app.port'));
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -36,8 +43,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//Set API_VERSION environment variables
+app.use(setApiVersion);
+
+//Sanitize user inputs
+app.use(sanitizeInputs);
+
 app.use('/', routes);
-app.use('/api', apiRoutes(app));
+apiRoutes(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -74,6 +88,6 @@ app.use(function(err, req, res, next) {
 
 var server = http.createServer(app);
 server.listen(app.get('port'), function () {
-  console.log('app listening on port ',app.get('port'));
+  console.log('app listening on port',app.get('port'));
 });
 module.exports = app;
