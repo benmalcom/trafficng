@@ -130,6 +130,7 @@ module.exports = {
             .skip(perPage * (page-1))
             .limit(perPage)
             .sort('-createdAt')
+            .populate('state level')
             .exec(function (err, traffics) {
                 if (err)
                 {

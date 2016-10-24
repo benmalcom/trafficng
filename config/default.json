@@ -2,7 +2,7 @@
     "app":
     {
         "name": "Traffic9ja",
-        "port": 4000,
+        "port": 3000,
         "baseUrl": "localhost:4000"
     },
     "api":

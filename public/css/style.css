@@ -70,12 +70,14 @@ Margins/Paddings*/
     margin-top: 60px !important;
 }
 .mt-50 {
-    margin-top: 40px !important;
+    margin-top: 50px !important;
 }
 .mt-40 {
     margin-top: 40px !important;
 }
-
+.mt-30 {
+    margin-top: 30px !important;
+}
 .mt-18 {
     margin-top: 18px !important;
 }
