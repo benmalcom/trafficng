@@ -1,7 +1,8 @@
 {
   "app":
   {
-    "baseUrl": "trafficng.herokuapp.com"
+    "baseUrl": "traffic9ja.herokuapp.com",
+    "port":4000
   },
   "db": {
     "mongodb" : {

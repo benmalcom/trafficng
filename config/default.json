@@ -1,9 +1,9 @@
 {
     "app":
     {
-        "name": "Traffic-ng",
-        "port": 3000,
-        "baseUrl": "localhost:3000"
+        "name": "Traffic9ja",
+        "port": 4000,
+        "baseUrl": "localhost:4000"
     },
     "api":
     {
