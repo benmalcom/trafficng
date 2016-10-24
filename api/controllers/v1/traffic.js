@@ -44,19 +44,20 @@ module.exports = {
                         error =  helper.transformToError({code:404,message:"State not found!"}).toCustom();
                         throw error;
                     }
-                    obj.location['state'] = state.name;
+                    console.log("state ",state);
                     var traffic = new Traffic(obj);
+                    traffic.location['state'] = state.name;
                     return traffic.save();
                 })
-                .then(function (err) {
-                        error =  helper.transformToError({code:503,message:"Sorry the traffic information could not be saved at this time, try again!",extra:err}).toCustom();
-                        return next(error);
-                    },
-                   function (savedTraffic) {
+                .then(function (savedTraffic) {
                         meta.success = true;
                         meta.message = "You added new traffic information!";
                         res.status(meta.statusCode).json(formatResponse.do(meta,savedTraffic));
-                });
+                    },function (err) {
+                        console.log("error ",err);
+                        error =  helper.transformToError({code:503,message:"Sorry the traffic information could not be saved at this time, try again!",extra:err}).toCustom();
+                        return next(error);
+                    });
         }
         else
         {
