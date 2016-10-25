@@ -104,14 +104,12 @@ module.exports = {
             var regEx = new RegExp(query.landmark, "i");
             queryCriteria['$or'].push({'location.landmark':regEx },{'location.street_name':regEx});
             qsSuffix = "?landmark="+query.landmark;
-            console.log("criteria ",queryCriteria);
         }
         if(query.state)
         {
             queryCriteria.state = query.state;
             qsSuffix = "?state="+query.state;
         }
-
         var perPage = query.perPage ? parseInt(query.perPage,"10") : config.get('itemsPerPage.default');
         var page = query.page ? parseInt(query.page,"10") : 1;
         var baseRequestUrl = config.get('app.baseUrl')+config.get('api.prefix')+"/traffics"+qsSuffix;

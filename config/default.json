@@ -3,7 +3,7 @@
     {
         "name": "Traffic9ja",
         "port": 3000,
-        "baseUrl": "localhost:4000"
+        "baseUrl": "localhost:3000"
     },
     "api":
     {
