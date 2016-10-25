@@ -17,6 +17,7 @@ var http = require('http');
 var engine = require('ejs-mate');
 var config = require('config');
 
+var io = require('./api/shared/io');
 var sanitizeInputs = require('./api/middlewares/sanitize');
 var setApiVersion = require('./api/middlewares/check_api_version');
 
@@ -87,6 +88,7 @@ app.use(function(err, req, res, next) {
 
 
 var server = http.createServer(app);
+io.attach(server);
 server.listen(app.get('port'), function () {
   console.log('app listening on port',app.get('port'));
 });

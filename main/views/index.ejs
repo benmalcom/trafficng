@@ -48,95 +48,42 @@
   <div class="col-sm-8">
 
     <div class="timeline timeline-left">
-      <article class="timeline-item alt">
+      <article class="timeline-item alt updates-label">
         <div class="text-left">
           <div class="time-show first">
-            <a href="#" class="btn btn-danger w-lg">Today</a>
-            <span class="col-sm-offset-7"><strong>Traffic updates</strong></span>
+            <a href="#" class="btn btn-danger w-lg">Traffic updates</a>
+            <!--<span class="col-sm-offset-7"><strong>Traffic updates</strong></span>-->
           </div>
         </div>
       </article>
-      <article class="timeline-item">
-        <div class="timeline-desk">
-          <div class="panel">
-            <div class="timeline-box">
-              <span class="arrow"></span>
-              <span class="timeline-icon"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-              <h4 class="">1 hour ago</h4>
-              <p class="timeline-date text-muted"><small>08:25 am</small></p>
-              <p>Dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? </p>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="timeline-item ">
-        <div class="timeline-desk">
-          <div class="panel">
-            <div class="timeline-box">
-              <span class="arrow"></span>
-              <span class="timeline-icon bg-success"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-              <h4 class="text-success">2 hours ago</h4>
-              <p class="timeline-date text-muted"><small>08:25 am</small></p>
-              <p>consectetur adipisicing elit. Iusto, optio, dolorum <a href="#">John deon</a> provident rerum aut hic quasi placeat iure tempora laudantium </p>
 
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="timeline-item">
-        <div class="timeline-desk">
-          <div class="panel">
-            <div class="timeline-box">
-              <span class="arrow"></span>
-              <span class="timeline-icon bg-primary"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-              <h4 class="text-primary">10 hours ago</h4>
-              <p class="timeline-date text-muted"><small>08:25 am</small></p>
-              <p>3 new photo Uploaded on facebook fan page</p>
-              <div class="album">
-                <a href="#">
-                  <img alt="" src="assets/images/small/img-1.jpg">
-                </a>
-                <a href="#">
-                  <img alt="" src="assets/images/small/img-2.jpg">
-                </a>
-                <a href="#">
-                  <img alt="" src="assets/images/small/img-3.jpg">
-                </a>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="timeline-item">
-        <div class="timeline-desk">
-          <div class="panel">
-            <div class="timeline-box">
-              <span class="arrow"></span>
-              <span class="timeline-icon bg-purple"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-              <h4 class="text-purple">14 hours ago</h4>
-              <p class="timeline-date text-muted"><small>08:25 am</small></p>
-              <p>Outdoor visit at California State Route 85 with John Boltana &
-                Harry Piterson regarding to setup a new show room.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-      <article class="timeline-item">
-        <div class="timeline-desk">
-          <div class="panel">
-            <div class="timeline-box">
-              <span class="arrow"></span>
-              <span class="timeline-icon"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-              <h4 class="text-muted">19 hours ago</h4>
-              <p class="timeline-date text-muted"><small>08:25 am</small></p>
-              <p>Jonatha Smith added new milestone <span><a href="#">Pathek</a></span>
-                Lorem ipsum dolor sit amet consiquest dio</p>
-            </div>
-          </div>
-        </div>
-      </article>
+        <% if(typeof traffics != "undefined" && traffics.length){  %>
+            <%
+              var colors = ["primary","success","info","warning","purple","danger","inverse","pink","orange","custom","brown","teal"];
+            %>
+            <% traffics.forEach(function (traffic) { %>
+                  <% var randomColor = colors[Math.floor(Math.random() * colors.length)]; %>
+                  <article class="timeline-item">
+                    <div class="timeline-desk">
+                      <div class="panel">
+                        <div class="timeline-box">
+                          <span class="arrow"></span>
+                          <span class="timeline-icon bg-<%= randomColor %>"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
+                          <h4><strong><a href="#"><i class="fa fa-map-marker"></i> <%= traffic.location.landmark %></a></strong></h4>
+                          <h5 class="text-<%= randomColor %>"><time class="timeago" datetime="<%= traffic.createdAt %>"></time></h5>
+                          <p><strong>Traffic Level: </strong> <label class="label label-<%= traffic.level.color %>"><%= traffic.level.name %></label></p>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+            <%}) %>
+
+      <!--<<!--%}else {%-->
+        <%}%>
 
     </div>
   </div>
 </div>
+
+<% block('lazy_js').append('<script src="/bower_components/moment/moment.js"></script>') %>
+<% block('lazy_js').append('<script src="/js/pages/index.js"></script>') %>

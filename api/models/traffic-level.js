@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var TrafficLevelSchema = new Schema({
-    name : { type: String}
+    name : { type: String},
+    color : {type: String, defaultsTo:"info"}
 },{
     timestamps: true
 });

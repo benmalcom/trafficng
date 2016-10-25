@@ -909,3 +909,6 @@ AngularJS Basic Animations
 .wrapper{
     padding-top: 0;
 }
+.new-traffic{
+    box-shadow: 0 0 1px red;
+}

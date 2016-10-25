@@ -1,0 +1,23 @@
+{
+  "name": "trafficng",
+  "description": "",
+  "main": "",
+  "authors": [
+    "benmalcom <benjaminikeji@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-timeago": "timeago#^1.5.3",
+    "moment": "^2.15.2"
+  }
+}

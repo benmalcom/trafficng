@@ -6,6 +6,7 @@ var Traffic = require('../../models/traffic');
 var State = require('../../models/state');
 
 var formatResponse = require('../../shared/format-response');
+var io = require('../../shared/io');
 var Validator = require('validatorjs');
 var _ = require('underscore');
 var helper = require('../../../utils/helper');
@@ -52,9 +53,15 @@ module.exports = {
                     return traffic.save();
                 })
                 .then(function (savedTraffic) {
+                    var populateOptions = [{path:'level'}, {path:'state'}];
+
+                    Traffic.populate(savedTraffic,populateOptions,function(err, populatedTraffic){
+                        console.log("new traffic ",populatedTraffic);
+                        io.emit('new traffic',populatedTraffic);
                         meta.success = true;
                         meta.message = "You added new traffic information!";
-                        res.status(meta.statusCode).json(formatResponse.do(meta,savedTraffic));
+                        res.status(meta.statusCode).json(formatResponse.do(meta,populatedTraffic));
+                    });
                     },function (err) {
                         console.log("error ",err);
                         error =  helper.transformToError({code:503,message:"Sorry the traffic information could not be saved at this time, try again!",extra:err}).toCustom();
